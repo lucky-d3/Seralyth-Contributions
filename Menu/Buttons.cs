@@ -2061,8 +2061,8 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Delay Ban Gun", method = Overpowered.DelayBanGun, disableMethod =() => SerializePatch.OverrideSerialization = null, toolTip = "Delay bans whoever your hand desires."},
                 new ButtonInfo { buttonText = "Delay Ban All", enableMethod = Overpowered.DelayBanAll, disableMethod =() => SerializePatch.OverrideSerialization = null, toolTip = "Delay bans everyone in the room."},
 
-                new ButtonInfo { buttonText = "Kick Gun", method =() => Overpowered.KickGun(), disableMethod =() => Overpowered.DisableKick(), toolTip = "Kicks whoever your hand desires."},
-                new ButtonInfo { buttonText = "Kick All", enableMethod =() => Overpowered.KickAll(), disableMethod =() => Overpowered.DisableKick(), toolTip = "Kicks everyone in the room."},
+                //new ButtonInfo { buttonText = "Kick Gun", method =() => Overpowered.KickGun(), disableMethod =() => Overpowered.DisableKick(), toolTip = "Kicks whoever your hand desires."},
+                //new ButtonInfo { buttonText = "Kick All", enableMethod =() => Overpowered.KickAll(), disableMethod =() => Overpowered.DisableKick(), toolTip = "Kicks everyone in the room."},
 
                 new ButtonInfo { buttonText = "Force Grab", method = Overpowered.ForceGrab, toolTip = "Attempts to grab the hand of anyone who presses their grips." },
                 new ButtonInfo { buttonText = "Fling on Grab", method = Overpowered.FlingOnGrab, toolTip = "Flings the player when they grab you." },
@@ -2072,10 +2072,10 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Obliterate on Grab", method =() => Overpowered.DirectionOnGrab(Vector3.up), toolTip = "Obliterates the player when they grab you." },
                 new ButtonInfo { buttonText = "Towards Point on Grab Gun", method = Overpowered.TowardsPointOnGrab, disableMethod = Overpowered.DisableTowardsPointOnGrab, toolTip = "Sends the player to your target position when they grab you." },
 
-                new ButtonInfo { buttonText = "Lag Server", method =() => Overpowered.FreezeServer(1f, 11), toolTip = "Lags the room." },
-                new ButtonInfo { buttonText = "Freeze Server", enableMethod =() => SerializePatch.OverrideSerialization = () => false, method =() => Overpowered.FreezeServer(), disableMethod =() => SerializePatch.OverrideSerialization = null, toolTip = "Freezes the room." },
-                new ButtonInfo { buttonText = "Crash Server", enableMethod =() => SerializePatch.OverrideSerialization = () => false, method =() => Overpowered.FreezeServer(0.5f, 40), disableMethod =() => SerializePatch.OverrideSerialization = null, toolTip = "Crashes the room." },
-                new ButtonInfo { buttonText = "Za Warudo <color=grey>[</color><color=green>T</color><color=grey>]</color>", enableMethod = Overpowered.ZaWarudo_enableMethod, method = Overpowered.ZaWarudo, toolTip = "Freeze all, but with special effects." },
+                //new ButtonInfo { buttonText = "Lag Server", method =() => Overpowered.FreezeServer(1f, 11), toolTip = "Lags the room." },
+                //new ButtonInfo { buttonText = "Freeze Server", enableMethod =() => SerializePatch.OverrideSerialization = () => false, method =() => Overpowered.FreezeServer(), disableMethod =() => SerializePatch.OverrideSerialization = null, toolTip = "Freezes the room." },
+                //new ButtonInfo { buttonText = "Crash Server", enableMethod =() => SerializePatch.OverrideSerialization = () => false, method =() => Overpowered.FreezeServer(0.5f, 40), disableMethod =() => SerializePatch.OverrideSerialization = null, toolTip = "Crashes the room." },
+                //new ButtonInfo { buttonText = "Za Warudo <color=grey>[</color><color=green>T</color><color=grey>]</color>", enableMethod = Overpowered.ZaWarudo_enableMethod, method = Overpowered.ZaWarudo, toolTip = "Freeze all, but with special effects." },
 
                 new ButtonInfo { buttonText = "Anti Report <color=grey>[</color><color=green>Fling</color><color=grey>]</color>", method = Overpowered.AntiReportFling, toolTip = "Flings whoever tries to report you."},
 

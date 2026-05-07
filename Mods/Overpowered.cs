@@ -5180,6 +5180,8 @@ namespace Seralyth.Mods
         public static bool acklowledgeFreeze;
         public static void FreezeServer(float delay = 1f, int eventCount = 11, RaiseEventOptions options = null)
         {
+            return;
+            /*
             if (!PhotonNetwork.InRoom) return;
 
             if (!acklowledgeFreeze)
@@ -5208,6 +5210,7 @@ namespace Seralyth.Mods
                 RPCProtection();
                 freezeAllDelay = Time.time + delay;
             }
+            */
         }
 
         private static float closeRoomDelay;
