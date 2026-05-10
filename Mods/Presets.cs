@@ -8,18 +8,19 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * at your option any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
 using Seralyth.Managers;
+using System;
 using System.IO;
 using static Seralyth.Menu.Main;
 
@@ -54,6 +55,7 @@ namespace Seralyth.Mods
             Settings.ChangeFontType();
 
             Settings.Panic();
+
             foreach (string mod in presetMods)
                 Toggle(mod);
 
@@ -76,6 +78,7 @@ namespace Seralyth.Mods
             Movement.longarmCycle = 2;
 
             Settings.Panic();
+
             foreach (string mod in presetMods)
                 Toggle(mod);
 
@@ -84,19 +87,46 @@ namespace Seralyth.Mods
 
         public static void SaveCustomPreset(int id)
         {
-            if (!Directory.Exists($"{PluginInfo.BaseDirectory}/SavedPresets"))
-                Directory.CreateDirectory($"{PluginInfo.BaseDirectory}/SavedPresets");
+            try
+            {
+                string directory = Path.Combine(PluginInfo.BaseDirectory, "SavedPresets");
+                Directory.CreateDirectory(directory);
 
-            File.WriteAllText($"{PluginInfo.BaseDirectory}/SavedPresets/Preset_" + id + ".txt", Settings.SavePreferencesToText());
+                string file = Path.Combine(directory, $"Preset_{id}.txt");
+                File.WriteAllText(file, Settings.SavePreferencesToText());
+
+                NotificationManager.SendNotification("<color=grey>[</color><color=purple>PRESET</color><color=grey>]</color> Custom preset saved successfully.");
+            }
+            catch (Exception ex)
+            {
+                LogManager.LogError($"Failed to save custom preset {id}: {ex}");
+                NotificationManager.SendNotification("<color=grey>[</color><color=red>ERROR</color><color=grey>]</color> Failed to save custom preset.");
+            }
         }
 
         public static void LoadCustomPreset(int id)
         {
-            if (Directory.Exists($"{PluginInfo.BaseDirectory}/SavedPresets"))
+            try
             {
-                string text = File.ReadAllText($"{PluginInfo.BaseDirectory}/SavedPresets/Preset_" + id + ".txt");
+                string directory = Path.Combine(PluginInfo.BaseDirectory, "SavedPresets");
+                string file = Path.Combine(directory, $"Preset_{id}.txt");
+
+                if (!File.Exists(file))
+                {
+                    NotificationManager.SendNotification("<color=grey>[</color><color=red>ERROR</color><color=grey>]</color> Custom preset not found.");
+                    return;
+                }
+
+                string text = File.ReadAllText(file);
                 LogManager.Log(text);
                 Settings.LoadPreferencesFromText(text);
+
+                NotificationManager.SendNotification("<color=grey>[</color><color=purple>PRESET</color><color=grey>]</color> Custom preset loaded successfully.");
+            }
+            catch (Exception ex)
+            {
+                LogManager.LogError($"Failed to load custom preset {id}: {ex}");
+                NotificationManager.SendNotification("<color=grey>[</color><color=red>ERROR</color><color=grey>]</color> Failed to load custom preset.");
             }
         }
 
@@ -119,6 +149,7 @@ namespace Seralyth.Mods
             Settings.ChangeFontType();
 
             Settings.Panic();
+
             foreach (string mod in presetMods)
                 Toggle(mod);
 
@@ -146,6 +177,7 @@ namespace Seralyth.Mods
             Settings.ChangeFontType();
 
             Settings.Panic();
+
             foreach (string mod in presetMods)
                 Toggle(mod);
 
@@ -162,6 +194,7 @@ namespace Seralyth.Mods
             };
 
             pageButtonType = 2;
+            Settings.ChangePageType();
 
             foreach (string mod in presetMods)
                 Toggle(mod);
