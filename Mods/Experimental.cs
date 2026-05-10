@@ -205,8 +205,15 @@ namespace Seralyth.Mods
 
         public static void CopyCustomGamemodeScript()
         {
-            NotificationManager.SendNotification("<color=grey>[</color><color=green>SUCCESS</color><color=grey>]</color> Copied map script to your clipboard.", 5000);
-            GUIUtility.systemCopyBuffer = CustomGameMode.LuaScript;
+            string script = CustomGameMode.LuaScript;
+
+            if (string.IsNullOrEmpty(script))
+                NotificationManager.SendNotification("<color=grey>[</color><color=yellow>WARNING</color><color=grey>]</color> This map does not have a Lua script.", 5000);
+            else
+            {
+                NotificationManager.SendNotification("<color=grey>[</color><color=green>SUCCESS</color><color=grey>]</color> Copied map script to your clipboard.", 5000);
+                GUIUtility.systemCopyBuffer = script;
+            }
         }
 
         public static void CopyCustomMapID()

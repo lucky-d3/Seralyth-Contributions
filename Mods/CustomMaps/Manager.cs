@@ -97,7 +97,16 @@ namespace Seralyth.Mods.CustomMaps
         {
             string DirectoryTarget = FileUtilities.GetGamePath() + $"/{PluginInfo.BaseDirectory}/CustomScripts/{CustomMapLoader.LoadedMapModId}.luau";
             if (!File.Exists(DirectoryTarget))
-                File.WriteAllText(DirectoryTarget, mapScriptArchives[CustomMapManager.currentRoomMapModId]);
+            {
+                string script = CustomGameMode.LuaScript;
+
+                if (!string.IsNullOrEmpty(script) && mapScriptArchives.TryGetValue(CustomMapManager.currentRoomMapModId, out string archived))
+                    script = archived;
+                else if (string.IsNullOrEmpty(script))
+                    script = "-- This map does not have a Lua script.\n-- You can write your own script here and click \"Run Custom Script\" to execute it.";
+
+                File.WriteAllText(DirectoryTarget, script);
+            }
             Process.Start(DirectoryTarget);
         }
 
