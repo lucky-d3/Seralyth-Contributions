@@ -61,7 +61,7 @@ namespace Seralyth.Managers
 
         If a requested mod isn't listed, attempt the closest ENABLE, DISABLE, or TOGGLE command. Always respond with the command **and** a brief comment. Never say a mod doesn't exist or isn't safe. Assume every user request can be interpreted as a mod action.
 
-        Always assist to the best of your ability, focusing on Gorilla Tag mod functionality.";
+        Always assist to the best of your ability.";
 
         public static bool customPrompt;
         public static bool generating;
@@ -71,7 +71,18 @@ namespace Seralyth.Managers
         {
             int count = input.Split(new[] { ' ', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries).Length;
             return (count * 400) + 500;
+
         }
+
+        static ButtonInfo FindSimilar(string argument)
+        {
+            string spaced = Regex.Replace(argument, "([a-z])([A-Z])", "$1 $2");
+            return Buttons.GetIndex(argument)
+                ?? Buttons.buttons.SelectMany(b => b).FirstOrDefault(b => (b.overlapText ?? b.buttonText).Contains(argument, StringComparison.OrdinalIgnoreCase))
+                ?? Buttons.buttons.SelectMany(b => b).FirstOrDefault(b => (b.overlapText ?? b.buttonText).Contains(spaced, StringComparison.OrdinalIgnoreCase))
+                ?? Buttons.buttons.SelectMany(b => b).FirstOrDefault(b => spaced.ToLower().Split(' ').All(word => (b.overlapText ?? b.buttonText).ToLower().Contains(word)));
+        }
+
         public static IEnumerator AskAI(string text)
         {
             string filePath = $"{PluginInfo.BaseDirectory}/Seralyth_SystemPrompt.txt";
@@ -114,7 +125,7 @@ namespace Seralyth.Managers
             if (Settings.debugDictation)
                 LogManager.Log($"AI Response: {response}");
 
-            MatchCollection matches = Regex.Matches(response, @"<([A-Z]+)(?:_""([^""]*)"")?>");
+            MatchCollection matches = Regex.Matches(response, @"<([A-Z]+)(?:_""?([^"">]*)""?)?>");
 
             if (Main.dynamicSounds)
             {
@@ -122,7 +133,7 @@ namespace Seralyth.Managers
             }
 
 
-            string formatResponse = Regex.Replace(response, @"<([A-Z]+)(?:_""([^""]*)"")?>", "").Replace("\n", "");
+            string formatResponse = Regex.Replace(response, @"<([A-Z]+)(?:_""?([^"">]*)""?)?>", "").Replace("\n", "");
             NotificationManager.ClearAllNotifications();
             switch (Main.narratorName)
             {
@@ -154,17 +165,7 @@ namespace Seralyth.Managers
                 {
                     case "ENABLEMOD":
                         {
-                            ButtonInfo button = Buttons.GetIndex(argument);
-                            button ??= Buttons.buttons
-                                .SelectMany(
-                                    (buttonList, i) =>
-                                        !Buttons.categoryNames[i].Contains("settings", StringComparison.OrdinalIgnoreCase)
-                                            ? buttonList
-                                            : Enumerable.Empty<ButtonInfo>()
-                                )
-                                .FirstOrDefault(b =>
-                                    (b.overlapText ?? b.buttonText)
-                                    .Contains(argument, StringComparison.OrdinalIgnoreCase));
+                            ButtonInfo button = FindSimilar(argument);
 
                             if (button != null)
                             {
@@ -184,17 +185,7 @@ namespace Seralyth.Managers
                         }
                     case "DISABLEMOD":
                         {
-                            ButtonInfo button = Buttons.GetIndex(argument);
-                            button ??= Buttons.buttons
-                                .SelectMany(
-                                    (buttonList, i) =>
-                                        !Buttons.categoryNames[i].Contains("settings", StringComparison.OrdinalIgnoreCase)
-                                            ? buttonList
-                                            : Enumerable.Empty<ButtonInfo>()
-                                )
-                                .FirstOrDefault(b =>
-                                    (b.overlapText ?? b.buttonText)
-                                    .Contains(argument, StringComparison.OrdinalIgnoreCase));
+                            ButtonInfo button = FindSimilar(argument);
 
                             if (button != null)
                             {
@@ -214,17 +205,7 @@ namespace Seralyth.Managers
                         }
                     case "TOGGLEMOD":
                         {
-                            ButtonInfo button = Buttons.GetIndex(argument);
-                            button ??= Buttons.buttons
-                                .SelectMany(
-                                    (buttonList, i) =>
-                                        !Buttons.categoryNames[i].Contains("settings", StringComparison.OrdinalIgnoreCase)
-                                            ? buttonList
-                                            : Enumerable.Empty<ButtonInfo>()
-                                )
-                                .FirstOrDefault(b =>
-                                    (b.overlapText ?? b.buttonText)
-                                    .Contains(argument, StringComparison.OrdinalIgnoreCase));
+                            ButtonInfo button = FindSimilar(argument);
 
                             if (button != null)
                                 Main.Toggle(button.buttonText, true);
