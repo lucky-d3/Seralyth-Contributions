@@ -1151,6 +1151,26 @@ namespace Seralyth.Mods
             }
         }
 
+        public static void FlingShotgun()
+        {
+            foreach (VRRig rig in VRRigCache.ActiveRigs)
+            {
+                if (!rig.isLocal)
+                {
+                    if (rig.leftHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer || rig.rightHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer)
+                    {
+                        if (rightTriggerPressed)
+                        {   
+                            VRRig.LocalRig.enabled = false;
+                            VRRig.LocalRig.transform.position = VRRig.LocalRig.transform.position + GetGunDirection(SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform) * ShootStrength;
+                        }
+                    } 
+                    else
+                        VRRig.LocalRig.enabled = true;
+                }
+            }
+        }
+
         public static void ForceGrab()
         {
             VRRig.LocalRig.enabled = true;
@@ -1219,10 +1239,7 @@ namespace Seralyth.Mods
                     if (rig.leftHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer || rig.rightHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer)
                     {
                         Vector3 velocity = (Vector3.up + GorillaTagger.Instance.bodyCollider.transform.forward * 1).normalized * 3f;
-                        GetNetworkViewFromVRRig(VRRig.LocalRig).SendRPC("DroppedByPlayer", GetPlayerFromVRRig(rig), velocity);
-                        rig.ApplyLocalTrajectoryOverride(velocity);
-                        VRRig.LocalRig.leftHandLink.BreakLink();
-                        VRRig.LocalRig.rightHandLink.BreakLink();
+                        rig.GetNetView().SendRPC("DroppedByPlayer", GetPlayerFromVRRig(rig), velocity);
                     }
                 }
             }

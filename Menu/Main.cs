@@ -4333,7 +4333,7 @@ namespace Seralyth.Menu
         /// Renders a gun pointer and line from the player's target gun position.
         /// </summary>
         /// <param name="overrideLayerMask">Layer Mask</param>
-        /// <returns>Raycast and Pointer object</returns>
+        /// <returns>RaycastHit and Pointer GameObject</returns>
         public static (RaycastHit Ray, GameObject NewPointer) RenderGun(int? overrideLayerMask = null)
         {
             GunSpawned = true;
