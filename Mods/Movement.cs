@@ -3697,7 +3697,9 @@ namespace Seralyth.Mods
             VRRig.LocalRig.transform.RotateAround(VRRig.LocalRig.bodyTransform.position, Camera.main.transform.forward, 180f);
 
         public static void VRRigLateUpdate_SpazBody() => Rotate(Random.rotationUniform);
-            
+
+        public static void VRRigLateUpdate_FakeFBT() => Rotate(Camera.main.transform.rotation);
+
 
         public static void DisableSizeChanger()
         {
