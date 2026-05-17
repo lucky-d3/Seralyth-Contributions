@@ -1174,11 +1174,9 @@ namespace Seralyth.Mods
             {
                 if (!rig.isLocal)
                 {
-                    bool grabbedByLeft = rig.leftHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer;
-                    bool grabbedByRight = rig.rightHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer;
-
-                    if (grabbedByLeft || grabbedByRight)
+                    if (rig.leftHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer || rig.rightHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer)
                     {
+                        bool grabbedByLeft = VRRig.LocalRig.leftHandLink.grabbedPlayer == rig.GetPlayer();
                         if (grabbedByLeft ? leftTriggerPressed : rightTriggerPressed)
                         {
                             VRRig.LocalRig.enabled = false;
