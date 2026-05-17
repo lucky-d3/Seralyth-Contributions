@@ -1159,7 +1159,8 @@ namespace Seralyth.Mods
                 {
                     if (rig.leftHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer || rig.rightHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer)
                     {
-                        if (rig.rightIndex.calcT > 0)
+                        bool grabbedOnLeft = VRRig.LocalRig.leftHandLink.grabbedPlayer == rig.GetPlayer();
+                        if (grabbedOnLeft ? rig.leftIndex.calcT > 0 : rig.rightIndex.calcT > 0)
                         {
                             GTPlayer.Instance.transform.position += rig.headMesh.transform.forward * (Time.deltaTime * Movement.FlySpeed);
                             GorillaTagger.Instance.rigidbody.linearVelocity = Vector3.zero;
