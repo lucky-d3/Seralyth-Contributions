@@ -1174,14 +1174,17 @@ namespace Seralyth.Mods
             {
                 if (!rig.isLocal)
                 {
-                    if (rig.leftHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer || rig.rightHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer)
+                    bool grabbedByLeft = rig.leftHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer;
+                    bool grabbedByRight = rig.rightHandLink.grabbedPlayer == NetworkSystem.Instance.LocalPlayer;
+
+                    if (grabbedByLeft || grabbedByRight)
                     {
-                        if (rightTriggerPressed)
-                        {   
+                        if (grabbedByLeft ? leftTriggerPressed : rightTriggerPressed)
+                        {
                             VRRig.LocalRig.enabled = false;
-                            VRRig.LocalRig.transform.position = VRRig.LocalRig.transform.position + GetGunDirection(SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform) * ShootStrength;
+                            VRRig.LocalRig.transform.position = VRRig.LocalRig.transform.position + GetGunDirection(grabbedByLeft ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform) * ShootStrength;
                         }
-                    } 
+                    }
                     else
                         VRRig.LocalRig.enabled = true;
                 }
