@@ -631,6 +631,9 @@ namespace Seralyth.Classes.Menu
                             ButtonType = Enum.TryParse(value["ButtonType"]?.ToString(), out GorillaPlayerLineButton.ButtonType buttonType) ? buttonType : GorillaPlayerLineButton.ButtonType.Cheating
                         };
 
+                        if (reportData.TryGetValue(item.Name, out var existing))
+                            entry.reportedIn = existing.reportedIn;
+
                         reportData[item.Name] = entry;
                     }
                 }
