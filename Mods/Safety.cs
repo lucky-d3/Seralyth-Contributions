@@ -907,7 +907,7 @@ namespace Seralyth.Mods
         public static void SpoofPlatform(bool enabled)
         {
             spoofingPlatform = enabled;
-            GorillaTagger.Instance.myVRRig.SendRPC("RPC_UpdateRankedInfo", RpcTarget.Others, 0, enabled ? 1 : 0, enabled ? 0 : 1);
+            VRRig.LocalRig.GetNetView().SendRPC("RPC_UpdateRankedInfo", RpcTarget.Others, 0, enabled ? 1 : 0, enabled ? 0 : 1);
         }
 
         public static int targetElo = 4000;
