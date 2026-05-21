@@ -3702,7 +3702,9 @@ namespace Seralyth.Mods
         {
             Rotate(Camera.main.transform.rotation);
             VRRig.LocalRig.leftHand.rigTarget.transform.position = GTPlayer.Instance.LeftHand.handFollower.transform.position;
+            VRRig.LocalRig.leftHand.rigTarget.transform.rotation = GTPlayer.Instance.LeftHand.handFollower.transform.rotation;
             VRRig.LocalRig.rightHand.rigTarget.transform.position = GTPlayer.Instance.RightHand.handFollower.transform.position;
+            VRRig.LocalRig.rightHand.rigTarget.transform.rotation = GTPlayer.Instance.RightHand.handFollower.transform.rotation;
         } 
 
         private static Quaternion? vrrigJoystickRot;
