@@ -3694,17 +3694,6 @@ namespace Seralyth.Mods
         public static void Rotate(Quaternion rot) =>
             VRRig.LocalRig.transform.rotation = rot;
 
-        public static void RotateFBT(Quaternion rot)
-        {
-            VRRig rig = VRRig.LocalRig;
-            float scale = rig.lastScaleFactor;
-            Transform cam = Camera.main.transform;
-            rig.transform.rotation = rot;
-            rig.transform.position = cam.position
-                + rig.headConstraint.rotation * rig.head.trackingPositionOffset * scale
-                + rig.transform.rotation * rig.headBodyOffset * scale;
-        }
-
         public static void VRRigLateUpdate_Dinnerbone() =>
             VRRig.LocalRig.transform.RotateAround(VRRig.LocalRig.bodyTransform.position, Camera.main.transform.forward, 180f);
 

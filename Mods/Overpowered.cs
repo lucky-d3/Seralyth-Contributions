@@ -1179,8 +1179,14 @@ namespace Seralyth.Mods
             }
         }
 
+        public static bool notifyGrab;
         public static void ForceGrab()
         {
+            if (!notifyGrab)
+            {
+                Prompt("This mod requires the person to be holding their grip for it to work. Try using the mod \"Grabbable Indicators\" to see who!");
+                notifyGrab = true;
+            }
             if (Time.time > grabDelay)
             {
                 foreach (VRRig rig in VRRigCache.ActiveRigs)
@@ -1228,6 +1234,11 @@ namespace Seralyth.Mods
 
         public static bool ForceGrab(VRRig rig, bool disableRigOnceDone = true)
         {
+            if (!notifyGrab)
+            {
+                Prompt("This mod requires the person to be holding their grip for it to work. Try using the mod \"Grabbable Indicators\" to see who!");
+                notifyGrab = true;
+            }
             if (rig.IsLocal()) return false;
 
             bool isLeftHand = rig.IsLeftHandGrabbable();
