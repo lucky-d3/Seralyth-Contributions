@@ -6910,7 +6910,12 @@ jgs \_   _/ |Oo\
 
         public static bool doCustomName;
         public static string customMenuName = "Your Text Here";
-        public static readonly string menuName = "<b>Seralyth</b> Menu";
+        public static readonly string menuName =
+#if LEGAL
+            "<b>Seralyth</b> Legal";
+#else
+            "<b>Seralyth</b> Menu";
+#endif
         public static bool doCustomMenuBackground;
         public static bool menuTrail;
         public static bool adaptiveButtons = true;
