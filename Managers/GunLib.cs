@@ -43,12 +43,8 @@ namespace Seralyth.Managers
             Selected = buttonColors[1].GetColor(0);
         }
 
-        public static void ResetGL()
-        {
+        public static void ResetGL() =>
             pObj?.SetActive(false);
-            if (PhotonNetwork.InRoom)
-                PhotonNetwork.RaiseEvent(22, null, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendUnreliable);
-        }
 
         #region ptr declaration & vars
         public static GameObject pObj;
