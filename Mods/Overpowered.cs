@@ -3371,7 +3371,7 @@ namespace Seralyth.Mods
                 sendEventData[1] = (byte)6;
                 sendEventData[2] = playerEffectData;
 
-                PhotonNetwork.RaiseEvent(3, sendEventData, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendUnreliable);
+                PhotonNetwork.RaiseEvent((byte)Constants.Network.ROOM_SYSTEM, sendEventData, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendUnreliable);
 
                 RPCProtection();
             }
@@ -3534,7 +3534,7 @@ namespace Seralyth.Mods
 
                     GrowingSnowballThrowable GrowingSnowball = GetProjectile($"{Projectiles.SnowballName}{(SnowballHandIndex ? "Right" : "Left")}Anchor") as GrowingSnowballThrowable;
 
-                    PhotonNetwork.RaiseEvent(176, new object[]
+                    PhotonNetwork.RaiseEvent(Constants.Network.COSMETIC_EVENT, new object[]
                     {
                         GrowingSnowball.changeSizeEvent._eventId,
                         customScale ?? snowballScale,
@@ -3543,7 +3543,7 @@ namespace Seralyth.Mods
                         Reliability = false
                     });
 
-                    PhotonNetwork.RaiseEvent(176, new object[]
+                    PhotonNetwork.RaiseEvent(Constants.Network.COSMETIC_EVENT, new object[]
                     {
                         GrowingSnowball.snowballThrowEvent._eventId,
                         Pos,
@@ -3583,7 +3583,7 @@ namespace Seralyth.Mods
             sendEventData[1] = (byte)6;
             sendEventData[2] = playerEffectData;
 
-            PhotonNetwork.RaiseEvent(3, sendEventData, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendUnreliable);
+            PhotonNetwork.RaiseEvent((byte)Constants.Network.ROOM_SYSTEM, sendEventData, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendUnreliable);
             RPCProtection();
         }
 
@@ -4712,7 +4712,7 @@ namespace Seralyth.Mods
 
                 else
                 {
-                    PhotonNetwork.NetworkingClient.LoadBalancingPeer.OpRaiseEvent(200, rpcData, options, new SendOptions
+                    PhotonNetwork.NetworkingClient.LoadBalancingPeer.OpRaiseEvent(Photon.Pun.PunEvent.RPC, rpcData, options, new SendOptions
                     {
                         Reliability = true,
                         DeliveryMode = DeliveryMode.ReliableUnsequenced,
@@ -6368,7 +6368,7 @@ namespace Seralyth.Mods
                 int view = PhotonNetwork.AllocateViewID(0);
                 for (int i = 0; i < 3965; i++)
                 {
-                    PhotonNetwork.NetworkingClient.OpRaiseEvent(202, new Hashtable
+                    PhotonNetwork.NetworkingClient.OpRaiseEvent(Photon.Pun.PunEvent.Instantiation, new Hashtable
                     {
                         { 0, "GameMode" },
                         { 6, PhotonNetwork.ServerTimestamp },
@@ -6971,13 +6971,13 @@ namespace Seralyth.Mods
         {
             Dictionary<byte, object> dictionary = new Dictionary<byte, object>
             {
-                { 251, new Hashtable { { 253, status }, { 254, status }, { 255, status ? 0 : PhotonNetworkController.Instance.currentJoinTrigger.GetRoomSize(SubscriptionManager.IsLocalSubscribed()) } } },
-                { 250, true },
-                { 231, null }
+                { Photon.Realtime.OperationCode.GetProperties, new Hashtable { { Photon.Realtime.GamePropertyKey.IsOpen, status }, { Photon.Realtime.GamePropertyKey.IsVisible, status }, { Photon.Realtime.GamePropertyKey.MaxPlayers, status ? 0 : PhotonNetworkController.Instance.currentJoinTrigger.GetRoomSize(SubscriptionManager.IsLocalSubscribed()) } } },
+                { Photon.Realtime.OperationCode.ExchangeKeysForEncryption, true },
+                { Photon.Realtime.OperationCode.AuthenticateOnce, null }
             };
 
             PhotonNetwork.CurrentRoom.LoadBalancingClient.LoadBalancingPeer.SendOperation(
-                252,
+                Photon.Realtime.OperationCode.SetProperties,
                 dictionary,
                 SendOptions.SendReliable
             );
@@ -7231,7 +7231,7 @@ namespace Seralyth.Mods
                 sendEventData[0] = NetworkSystem.Instance.ServerTimestamp;
                 sendEventData[1] = (byte)2;
                 sendEventData[2] = statusSendData;
-                PhotonNetwork.RaiseEvent(3, sendEventData, reo, SendOptions.SendUnreliable);
+                PhotonNetwork.RaiseEvent((byte)Constants.Network.ROOM_SYSTEM, sendEventData, reo, SendOptions.SendUnreliable);
             }
         }
 

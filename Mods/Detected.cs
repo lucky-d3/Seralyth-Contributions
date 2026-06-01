@@ -163,12 +163,12 @@ namespace Seralyth.Mods
                         hashtable = new Hashtable { { 0, viewID == -1 ? view.ViewID : viewID } };
                     }
                     raiseEventOptions ??= new RaiseEventOptions { TargetActors = new[] { rig.GetPlayer().ActorNumber } };
-                    PhotonNetwork.NetworkingClient.OpRaiseEvent(204, hashtable, raiseEventOptions, SendOptions.SendReliable);
+                    PhotonNetwork.NetworkingClient.OpRaiseEvent(Photon.Pun.PunEvent.Destroy, hashtable, raiseEventOptions, SendOptions.SendReliable);
                     break;
                 case Player player:
                     hashtable ??= new Hashtable { { 0, player.ActorNumber } };
                     raiseEventOptions ??= new RaiseEventOptions { TargetActors = new[] { player.ActorNumber } };
-                    PhotonNetwork.NetworkingClient.OpRaiseEvent(207, hashtable, raiseEventOptions, SendOptions.SendReliable);
+                    PhotonNetwork.NetworkingClient.OpRaiseEvent(Photon.Pun.PunEvent.DestroyPlayer, hashtable, raiseEventOptions, SendOptions.SendReliable);
                     break;
                 case GameObject _:
                     break;
@@ -862,7 +862,7 @@ namespace Seralyth.Mods
                 {
                     Hashtable hashtable = new Hashtable
                     {
-                        [byte.MaxValue] = name
+                        [Photon.Realtime.ActorProperties.PlayerName] = name
                     };
                     PhotonNetwork.CurrentRoom.LoadBalancingClient.OpSetPropertiesOfActor(lockTarget.GetPlayer().ActorNumber, hashtable);
                 }
@@ -890,7 +890,7 @@ namespace Seralyth.Mods
             {
                 Hashtable hashtable = new Hashtable
                 {
-                    [byte.MaxValue] = name
+                    [Photon.Realtime.ActorProperties.PlayerName] = name
                 };
                 PhotonNetwork.CurrentRoom.LoadBalancingClient.OpSetPropertiesOfActor(player.ActorNumber, hashtable);
             }
@@ -915,7 +915,7 @@ namespace Seralyth.Mods
                 {
                     Hashtable hashtable = new Hashtable
                     {
-                        [byte.MaxValue] = name
+                        [Photon.Realtime.ActorProperties.PlayerName] = name
                     };
                     PhotonNetwork.CurrentRoom.LoadBalancingClient.OpSetPropertiesOfActor(nearbyPlayer.GetPlayer().ActorNumber, hashtable);
                 }
@@ -946,7 +946,7 @@ namespace Seralyth.Mods
                 {
                     Hashtable hashtable = new Hashtable
                     {
-                        [byte.MaxValue] = name
+                        [Photon.Realtime.ActorProperties.PlayerName] = name
                     };
                     PhotonNetwork.CurrentRoom.LoadBalancingClient.OpSetPropertiesOfActor(rig.GetPlayer().ActorNumber, hashtable);
                 }
@@ -964,7 +964,7 @@ namespace Seralyth.Mods
                 {
                     Hashtable hashtable = new Hashtable
                     {
-                        [byte.MaxValue] = GorillaComputer.instance.anywhereTwoWeek[Random.Range(0, GorillaComputer.instance.anywhereTwoWeek.Length)]
+                        [Photon.Realtime.ActorProperties.PlayerName] = GorillaComputer.instance.anywhereTwoWeek[Random.Range(0, GorillaComputer.instance.anywhereTwoWeek.Length)]
                     };
                     PhotonNetwork.CurrentRoom.LoadBalancingClient.OpSetPropertiesOfActor(lockTarget.GetPlayer().ActorNumber, hashtable);
                     MonkeAgent.instance.SendReport("evading the name ban", lockTarget.GetPlayer().UserId, lockTarget.GetPlayer().NickName);
@@ -993,7 +993,7 @@ namespace Seralyth.Mods
             {
                 Hashtable hashtable = new Hashtable
                 {
-                    [byte.MaxValue] = GorillaComputer.instance.anywhereTwoWeek[Random.Range(0, GorillaComputer.instance.anywhereTwoWeek.Length)]
+                    [Photon.Realtime.ActorProperties.PlayerName] = GorillaComputer.instance.anywhereTwoWeek[Random.Range(0, GorillaComputer.instance.anywhereTwoWeek.Length)]
                 };
                 PhotonNetwork.CurrentRoom.LoadBalancingClient.OpSetPropertiesOfActor(player.ActorNumber, hashtable);
                 MonkeAgent.instance.SendReport("evading the name ban", player.UserId, player.NickName);
@@ -1019,7 +1019,7 @@ namespace Seralyth.Mods
                 {
                     Hashtable hashtable = new Hashtable
                     {
-                        [byte.MaxValue] = GorillaComputer.instance.anywhereTwoWeek[Random.Range(0, GorillaComputer.instance.anywhereTwoWeek.Length)]
+                        [Photon.Realtime.ActorProperties.PlayerName] = GorillaComputer.instance.anywhereTwoWeek[Random.Range(0, GorillaComputer.instance.anywhereTwoWeek.Length)]
                     };
                     PhotonNetwork.CurrentRoom.LoadBalancingClient.OpSetPropertiesOfActor(nearbyPlayer.GetPlayer().ActorNumber, hashtable);
                     MonkeAgent.instance.SendReport("evading the name ban", nearbyPlayer.GetPlayer().UserId, nearbyPlayer.GetPlayer().NickName);
@@ -1051,7 +1051,7 @@ namespace Seralyth.Mods
                 {
                     Hashtable hashtable = new Hashtable
                     {
-                        [byte.MaxValue] = GorillaComputer.instance.anywhereTwoWeek[Random.Range(0, GorillaComputer.instance.anywhereTwoWeek.Length)]
+                        [Photon.Realtime.ActorProperties.PlayerName] = GorillaComputer.instance.anywhereTwoWeek[Random.Range(0, GorillaComputer.instance.anywhereTwoWeek.Length)]
                     };
                     PhotonNetwork.CurrentRoom.LoadBalancingClient.OpSetPropertiesOfActor(rig.GetPlayer().ActorNumber, hashtable);
                     MonkeAgent.instance.SendReport("evading the name ban", rig.GetPlayer().UserId, rig.GetPlayer().NickName);

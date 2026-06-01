@@ -538,7 +538,7 @@ namespace Seralyth.Mods
         {
             try
             {
-                if (data.Code == 200)
+                if (data.Code == Photon.Pun.PunEvent.RPC)
                 {
                     string rpcName = PhotonNetwork.PhotonServerSettings.RpcList[int.Parse(((Hashtable)data.CustomData)[5].ToString())];
                     object[] args = (object[])((Hashtable)data.CustomData)[4];

@@ -5817,13 +5817,13 @@ namespace Seralyth.Menu
             objectUpdate[1] = currentLevelPrefix != 0 ? (object)currentLevelPrefix : null;
 
             if (delay <= 0f)
-                PhotonNetwork.NetworkingClient.OpRaiseEvent((byte)(reliable ? 206 : 201), objectUpdate, finalOptions,
+                PhotonNetwork.NetworkingClient.OpRaiseEvent((byte)(reliable ? Photon.Pun.PunEvent.SendSerializeReliable : Photon.Pun.PunEvent.SendSerialize), objectUpdate, finalOptions,
                     reliable ? SendOptions.SendReliable : SendOptions.SendUnreliable);
             else
             {
                 objectUpdate = new List<object>(objectUpdate);
                 CoroutineManager.instance.StartCoroutine(SerializationDelay(() =>
-                    PhotonNetwork.NetworkingClient.OpRaiseEvent((byte)(reliable ? 206 : 201), objectUpdate, finalOptions,
+                    PhotonNetwork.NetworkingClient.OpRaiseEvent((byte)(reliable ? Photon.Pun.PunEvent.SendSerializeReliable : Photon.Pun.PunEvent.SendSerialize), objectUpdate, finalOptions,
                         reliable ? SendOptions.SendReliable : SendOptions.SendUnreliable), delay));
             }
 

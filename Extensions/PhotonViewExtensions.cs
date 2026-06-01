@@ -71,7 +71,7 @@ namespace Seralyth.Extensions
 
                 else
                 {
-                    PhotonNetwork.NetworkingClient.LoadBalancingPeer.OpRaiseEvent(200, rpcData, options, new SendOptions
+                    PhotonNetwork.NetworkingClient.LoadBalancingPeer.OpRaiseEvent(Photon.Pun.PunEvent.RPC, rpcData, options, new SendOptions
                     {
                         Reliability = true,
                         DeliveryMode = DeliveryMode.ReliableUnsequenced,
