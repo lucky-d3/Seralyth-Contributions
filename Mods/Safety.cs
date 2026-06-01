@@ -238,7 +238,7 @@ namespace Seralyth.Mods
         {
             try
             {
-                if (data.Code == 200)
+                if (data.Code == Photon.Pun.PunEvent.RPC)
                 {
                     string rpcName = PhotonNetwork.PhotonServerSettings.RpcList[int.Parse(((Hashtable)data.CustomData)[5].ToString())];
                     object[] args = (object[])((Hashtable)data.CustomData)[4];
@@ -295,6 +295,9 @@ namespace Seralyth.Mods
 
             if (reportRig != null)
             {
+                if (reportRig.IsLocal())
+                    return;
+
                 onReport?.Invoke(reportRig, reportRig.transform.position);
                 reportRig = null;
                 AchievementManager.UnlockAchievement(new AchievementManager.Achievement
@@ -361,13 +364,17 @@ namespace Seralyth.Mods
         {
             try
             {
-                if (data.Code == 200)
+                if (data.Code == Photon.Pun.PunEvent.RPC)
                 {
+                    var sender = PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer(data.Sender);
+                    if (sender.IsLocal)
+                        return;
+
                     string rpcName = PhotonNetwork.PhotonServerSettings.RpcList[int.Parse(((Hashtable)data.CustomData)[5].ToString())];
                     object[] args = (object[])((Hashtable)data.CustomData)[4];
                     if (rpcName == "RPC_PlayHandTap" && (int)args[0] == 67)
                     {
-                        VRRig target = GetVRRigFromPlayer(PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer(data.Sender));
+                        VRRig target = GetVRRigFromPlayer(sender);
                         if (Vector3.Distance(target.leftHandTransform.position, target.rightHandTransform.position) < 0.1f)
                             AntiReportFRT(PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer(data.Sender));
                     }
@@ -430,8 +437,13 @@ namespace Seralyth.Mods
                 NotificationManager.information["Anti-Report"] = notifyText;
         }
 
-        public static void AntiReportFRT(Player subject) =>
+        public static void AntiReportFRT(Player subject)
+        {
+            if (subject.IsLocal)
+                return;
+
             reportRig = subject.VRRig();
+        }
 
         public static void AntiModerator()
         {
@@ -900,8 +912,8 @@ namespace Seralyth.Mods
         /// <summary>
         /// Spoofs your platform for the Ranked gamemode.
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <param name="target"></param>
+        /// <param name="enabled">Spoof Enabled</param>
+        /// <param name="target">Target Platform</param>
         public static void SpoofPlatform(bool enabled, string target = null)
         {
             RankedPatch.enabled = enabled;
