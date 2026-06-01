@@ -286,7 +286,7 @@ namespace Seralyth.Mods
                             }
                             else
                             {
-                                PhotonNetwork.RaiseEvent(176, new object[]
+                                PhotonNetwork.RaiseEvent(Constants.Network.COSMETIC_EVENT, new object[]
                                 {
                                     GrowingSnowball.changeSizeEvent._eventId,
                                     scale
@@ -296,7 +296,7 @@ namespace Seralyth.Mods
                                     Encrypt = true
                                 });
 
-                                PhotonNetwork.RaiseEvent(176, new object[]
+                                PhotonNetwork.RaiseEvent(Constants.Network.COSMETIC_EVENT, new object[]
                                 {
                                     GrowingSnowball.snowballThrowEvent._eventId,
                                     position,

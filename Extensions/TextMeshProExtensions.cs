@@ -2,7 +2,7 @@
  * Seralyth Menu  Extensions/TextMeshProExtensions.cs
  * A community driven mod menu for Gorilla Tag with over 1000+ mods
  *
- * Copyright (C) 2025  Seralyth Software
+ * Copyright (C) 2026  Seralyth Software
  * https://github.com/Seralyth/Seralyth-Menu
  *
  * This program is free software: you can redistribute it and/or modify

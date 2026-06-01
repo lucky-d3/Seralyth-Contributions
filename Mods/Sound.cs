@@ -832,7 +832,7 @@ namespace Seralyth.Mods
                 if (Time.time > sendEffectDelay)
                 {
                     object[] soundSendData = { id, volume, false };
-                    object[] sendEventData = { PhotonNetwork.ServerTimestamp, (byte)3, soundSendData };
+                    object[] sendEventData = { PhotonNetwork.ServerTimestamp, (byte)Constants.Network.ROOM_SYSTEM, soundSendData };
 
                     try
                     {

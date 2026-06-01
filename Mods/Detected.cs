@@ -163,12 +163,12 @@ namespace Seralyth.Mods
                         hashtable = new Hashtable { { 0, viewID == -1 ? view.ViewID : viewID } };
                     }
                     raiseEventOptions ??= new RaiseEventOptions { TargetActors = new[] { rig.GetPlayer().ActorNumber } };
-                    PhotonNetwork.NetworkingClient.OpRaiseEvent(204, hashtable, raiseEventOptions, SendOptions.SendReliable);
+                    PhotonNetwork.NetworkingClient.OpRaiseEvent(Photon.Pun.PunEvent.Destroy, hashtable, raiseEventOptions, SendOptions.SendReliable);
                     break;
                 case Player player:
                     hashtable ??= new Hashtable { { 0, player.ActorNumber } };
                     raiseEventOptions ??= new RaiseEventOptions { TargetActors = new[] { player.ActorNumber } };
-                    PhotonNetwork.NetworkingClient.OpRaiseEvent(207, hashtable, raiseEventOptions, SendOptions.SendReliable);
+                    PhotonNetwork.NetworkingClient.OpRaiseEvent(Photon.Pun.PunEvent.DestroyPlayer, hashtable, raiseEventOptions, SendOptions.SendReliable);
                     break;
                 case GameObject _:
                     break;
