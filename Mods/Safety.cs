@@ -367,7 +367,7 @@ namespace Seralyth.Mods
                 if (data.Code == Photon.Pun.PunEvent.RPC)
                 {
                     var sender = PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer(data.Sender);
-                    if (sender.IsLocal())
+                    if (sender.IsLocal)
                         return;
 
                     string rpcName = PhotonNetwork.PhotonServerSettings.RpcList[int.Parse(((Hashtable)data.CustomData)[5].ToString())];
@@ -439,7 +439,7 @@ namespace Seralyth.Mods
 
         public static void AntiReportFRT(Player subject)
         {
-            if (subject.IsLocal())
+            if (subject.IsLocal)
                 return;
 
             reportRig = subject.VRRig();
