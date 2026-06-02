@@ -5475,7 +5475,7 @@ namespace Seralyth.Mods
                 RaycastHit Ray = GunData.Ray;
 
                 if (gunLocked && lockTarget != null)
-                    ForceGrab(lockTarget, new Vector3(500, 500, 500));
+                    ForceGrab(lockTarget, Vector3.one * 500f);
 
                 if (GetGunInput(true))
                 {
@@ -5496,7 +5496,7 @@ namespace Seralyth.Mods
         }
 
         public static void FlingAll() =>
-            ForceGrab(new Vector3(500, 500, 500));
+            ForceGrab(Vector3.one * 500f);
 
         public static void BringPlayerGun()
         {
