@@ -414,6 +414,104 @@ namespace Seralyth.Mods
             }
         }
 
+        public static float splashDelay;
+
+        public static void WaterSplashEveryone()
+        {
+            if (Time.time < splashDelay)
+                return;
+
+            splashDelay = Time.time + 0.5f;
+
+            CoroutineManager.RunCoroutine(WaterSplashEveryoneR());
+        }
+
+        public static IEnumerator WaterSplashEveryoneR()
+        {
+            foreach (VRRig rig in VRRigCache.ActiveRigs)
+            {
+                if (rig == null || rig == VRRig.LocalRig)
+                    continue;
+
+                Vector3 splashPos = rig.headMesh.transform.position + Vector3.up * 0.3f;
+                Vector3 originalPos = VRRig.LocalRig.transform.position;
+
+                VRRig.LocalRig.transform.position = splashPos + Vector3.down * 0.5f;
+
+                BetaWaterSplash(
+                    splashPos,
+                    Quaternion.identity,
+                    1f,
+                    0.5f,
+                    true,
+                    false,
+                    RpcTarget.All
+                );
+
+                yield return null;
+
+                VRRig.LocalRig.transform.position = originalPos;
+            }
+        }
+
+        private static bool lastLeftSplash;
+        private static bool lastRightSplash;
+
+        public static void WaterSplashOnTouch()
+        {
+            bool isTouchingLeft = false;
+            bool isTouchingRight = false;
+
+            foreach (VRRig rig in VRRigCache.ActiveRigs)
+            {
+                if (rig.isLocal)
+                    continue;
+
+                float leftDist = Vector3.Distance(
+                    GorillaTagger.Instance.leftHandTransform.position,
+                    rig.headMesh.transform.position);
+
+                float rightDist = Vector3.Distance(
+                    GorillaTagger.Instance.rightHandTransform.position,
+                    rig.headMesh.transform.position);
+
+                const float threshold = 0.275f;
+
+                if (!isTouchingLeft)
+                    isTouchingLeft = leftDist < threshold;
+
+                if (!isTouchingRight)
+                    isTouchingRight = rightDist < threshold;
+
+                if (leftDist < threshold && !lastLeftSplash)
+                {
+                    BetaWaterSplash(
+                        rig.headMesh.transform.position + Vector3.up * 0.2f,
+                        Quaternion.identity,
+                        1f,
+                        0.5f,
+                        true,
+                        false
+                    );
+                }
+
+                if (rightDist < threshold && !lastRightSplash)
+                {
+                    BetaWaterSplash(
+                        rig.headMesh.transform.position + Vector3.up * 0.2f,
+                        Quaternion.identity,
+                        1f,
+                        0.5f,
+                        true,
+                        false
+                    );
+                }
+            }
+
+            lastLeftSplash = isTouchingLeft;
+            lastRightSplash = isTouchingRight;
+        }
+
         public static void WaterSplashAura()
         {
             if (Time.time > splashDel)
