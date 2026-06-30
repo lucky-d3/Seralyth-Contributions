@@ -1060,8 +1060,8 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Give Water Splash Hands Gun", method = Fun.GiveWaterSplashHandsGun, toolTip = "Gives whoever your hand desires the water splash hands mod." },
 
                 new ButtonInfo { buttonText = "Water Splash Walk", method = Fun.WaterSplashWalk, toolTip = "Splashes water whenever you take a step."},
-		new ButtonInfo { buttonText = "Water Splash Everyone", method = Fun.WaterSplashEveryone, toolTip = "Splashes water above every player."},
-		new ButtonInfo { buttonText = "Water Splash On Touch", method = Fun.WaterSplashOnTouch, toolTip = "Splashes water on people when you touch them."},
+		        new ButtonInfo { buttonText = "Water Splash Everyone", method = Fun.WaterSplashEveryone, toolTip = "Splashes water above every player."},
+	        	new ButtonInfo { buttonText = "Water Splash On Touch", method = Fun.WaterSplashOnTouch, toolTip = "Splashes water on people when you touch them."},
                 new ButtonInfo { buttonText = "Water Splash Aura", method = Fun.WaterSplashAura, toolTip = "Splashes water around you at random positions."},
                 new ButtonInfo { buttonText = "Orbit Water Splash", method = Fun.OrbitWaterSplash, toolTip = "Splashes water orbitally around you."},
                 new ButtonInfo { buttonText = "Water Splash Gun", method = Fun.WaterSplashGun, toolTip = "Splashes water wherever your hand desires."},
